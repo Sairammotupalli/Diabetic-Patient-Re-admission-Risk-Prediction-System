@@ -5,8 +5,6 @@ A comprehensive machine learning pipeline for predicting diabetic patient readmi
 
 ## Project Overview
 
-**Target**: Use healthcare data to predict if a diabetic patient will be readmitted within 30 days of discharge.
-
 **Key Features**:
 - Complete data preprocessing pipeline
 - Multiple ML models (Logistic Regression, XGBoost)
@@ -25,7 +23,6 @@ A comprehensive machine learning pipeline for predicting diabetic patient readmi
 
 ### 2. Model Training
 - **Logistic Regression**: Linear model with regularization
-- **Random Forest Classifier**: Ensemble tree-based model
 - **XGBoost**: Gradient boosting with hyperparameter tuning
 - **ML Pipeline**: Using scikit-learn Pipelines + GridSearchCV
 
@@ -98,21 +95,6 @@ python model_training.py
 streamlit run dashboard.py
 ```
 
-## Dashboard Features
-
-The interactive Streamlit dashboard includes:
-
-### Overview Page
-- Key metrics and insights
-- Dataset characteristics
-- Model performance summary
-
-### Data Analysis Page
-- Readmission distribution
-- Age/gender analysis
-- Insulin usage patterns
-- Medication count analysis
-
 ## Models Implemented
 
 ### 1. Logistic Regression
@@ -174,6 +156,10 @@ Preprocessing parameters in `data_preprocessing.py`:
 - Use smaller hyperparameter grids for faster training
 - Reduce cross-validation folds (cv=3 instead of cv=5)
 - Use subset of data for testing
+
+### Model Accuracies
+![Feature Importance](plots/feature_importance.png)
+
 
 ## Model Performance Results
 
