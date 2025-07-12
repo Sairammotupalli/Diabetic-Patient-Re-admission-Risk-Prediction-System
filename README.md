@@ -14,17 +14,6 @@ A comprehensive machine learning pipeline for predicting diabetic patient readmi
 - Interactive Streamlit dashboard
 - Comprehensive model evaluation
 
-## 📊 Model Performance Results
-
-### ROC Curves Comparison
-![ROC Curves](plots/roc_curves.png)
-
-### Confusion Matrices
-![Confusion Matrices](plots/confusion_matrices.png)
-
-### Feature Importance Analysis
-![Feature Importance](plots/feature_importance.png)
-
 ## Pipeline Steps
 
 ### 1. Data Loading & Preprocessing
@@ -188,6 +177,17 @@ Preprocessing parameters in `data_preprocessing.py`:
 - Use smaller hyperparameter grids for faster training
 - Reduce cross-validation folds (cv=3 instead of cv=5)
 - Use subset of data for testing
+
+## Model Performance Results
+
+### ROC Curves Comparison
+![ROC Curves](plots/roc_curves.png)
+
+### Confusion Matrices
+![Confusion Matrices](plots/confusion_matrices.png)
+
+### Feature Importance Analysis
+![Feature Importance](plots/feature_importance.png)
 
 ## License
 
