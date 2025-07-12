@@ -1,0 +1,25 @@
+# Core ML packages
+fastapi
+uvicorn
+pandas
+joblib
+scikit-learn
+xgboost
+numpy
+matplotlib
+seaborn
+plotly
+streamlit
+imbalanced-learn
+mlflow
+sqlalchemy
+scipy
+
+# Jupyter for development
+jupyter
+jupyterlab
+ipykernel
+
+# Additional utilities
+tqdm
+requests 

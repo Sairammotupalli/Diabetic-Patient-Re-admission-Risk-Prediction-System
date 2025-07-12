@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # Main application with all services
+  readmission-prediction:
+    build: .
+    container_name: readmission-prediction-app
+    ports:
+      - "8501:8501"  # Streamlit Dashboard
+      - "8000:8000"  # FastAPI
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./plots:/app/plots
+    environment:
+      - PYTHONUNBUFFERED=1
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Alternative: Separate services for different components
+  dashboard-only:
+    build: .
+    container_name: readmission-dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - PYTHONUNBUFFERED=1
+      - STREAMLIT_SERVER_HEADLESS=true
+    command: streamlit run dashboard.py --server.headless true --server.port 8501 --server.address 0.0.0.0
+    profiles:
+      - dashboard
+
+  api-only:
+    build: .
+    container_name: readmission-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python3 api_predictor.py
+    profiles:
+      - api
+
+  # Development service with Jupyter notebooks
+  development:
+    build: .
+    container_name: readmission-dev
+    ports:
+      - "8888:8888"  # Jupyter
+      - "8501:8501"  # Streamlit
+      - "8000:8000"  # FastAPI
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./plots:/app/plots
+      - ./notebooks:/app/notebooks
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''
+    profiles:
+      - development
+
+  # Training service
+  training:
+    build: .
+    container_name: readmission-training
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./plots:/app/plots
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python3 model_training.py
+    profiles:
+      - training
+
+  # Data preprocessing service
+  preprocessing:
+    build: .
+    container_name: readmission-preprocessing
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python3 data_preprocessing.py
+    profiles:
+      - preprocessing
+
+networks:
+  default:
+    name: readmission-network 
