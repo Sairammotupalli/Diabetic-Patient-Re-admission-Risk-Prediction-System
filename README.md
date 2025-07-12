@@ -8,11 +8,22 @@ A comprehensive machine learning pipeline for predicting diabetic patient readmi
 
 **Key Features**:
 - Complete data preprocessing pipeline
-- Multiple ML models (Logistic Regression, Random Forest, XGBoost)
+- Multiple ML models (Logistic Regression, XGBoost)
 - SMOTE for class balancing
 - Hypothesis testing for insulin usage correlation
 - Interactive Streamlit dashboard
 - Comprehensive model evaluation
+
+## 📊 Model Performance Results
+
+### ROC Curves Comparison
+![ROC Curves](plots/roc_curves.png)
+
+### Confusion Matrices
+![Confusion Matrices](plots/confusion_matrices.png)
+
+### Feature Importance Analysis
+![Feature Importance](plots/feature_importance.png)
 
 ## Pipeline Steps
 
@@ -123,12 +134,7 @@ The interactive Streamlit dashboard includes:
 - **Use case**: Baseline model, feature importance
 - **Hyperparameters**: C, penalty, solver
 
-### 2. Random Forest
-- **Advantages**: Handles non-linear relationships, feature importance
-- **Use case**: Robust ensemble model
-- **Hyperparameters**: n_estimators, max_depth, min_samples_split
-
-### 3. XGBoost
+### 2. XGBoost
 - **Advantages**: High performance, handles missing values
 - **Use case**: Best performing model
 - **Hyperparameters**: learning_rate, max_depth, subsample
