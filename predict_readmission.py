@@ -22,7 +22,6 @@ class ReadmissionPredictor:
         # Load models
         model_files = {
             'LogisticRegression': 'models/logisticregression_model.pkl',
-            'RandomForest': 'models/randomforest_model.pkl', 
             'XGBoost': 'models/xgboost_model.pkl'
         }
         

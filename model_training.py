@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import joblib
 from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
+
 from xgboost import XGBClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV, cross_val_score
@@ -42,11 +42,6 @@ class ModelTrainer:
             ('classifier', LogisticRegression(random_state=42, max_iter=1000, solver='liblinear', C=1.0))
         ])
         
-        # Random Forest Pipeline
-        rf_pipeline = Pipeline([
-            ('classifier', RandomForestClassifier(random_state=42, n_estimators=100))
-        ])
-        
         # XGBoost Pipeline
         xgb_pipeline = Pipeline([
             ('classifier', XGBClassifier(random_state=42, eval_metric='logloss'))
@@ -54,7 +49,6 @@ class ModelTrainer:
         
         self.models = {
             'LogisticRegression': lr_pipeline,
-            'RandomForest': rf_pipeline,
             'XGBoost': xgb_pipeline
         }
         
@@ -70,11 +64,7 @@ class ModelTrainer:
                 'classifier__penalty': ['l1', 'l2'],
                 'classifier__solver': ['liblinear']
             },
-            'RandomForest': {
-                'classifier__n_estimators': [50, 100],
-                'classifier__max_depth': [10, None],
-                'classifier__min_samples_split': [2, 5]
-            },
+
             'XGBoost': {
                 'classifier__n_estimators': [100, 200],
                 'classifier__max_depth': [3, 6],
@@ -259,7 +249,7 @@ class ModelTrainer:
         plt.close()
         
         # Feature Importance (for tree-based models)
-        tree_models = ['RandomForest', 'XGBoost']
+        tree_models = ['XGBoost']
         if any(model in self.feature_importance for model in tree_models):
             fig, axes = plt.subplots(1, 2, figsize=(15, 6))
             
