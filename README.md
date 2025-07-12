@@ -1,5 +1,5 @@
 # Diabetic-Patient-Re-admission-Risk-Prediction-System 
-[Get Link](https://diabetic-patient-re-admission-risk-prediction-system-j52gbqfnw.streamlit.app/)
+[Website Link](https://diabetic-patient-re-admission-risk-prediction-system-j52gbqfnw.streamlit.app/)
 
 A comprehensive machine learning pipeline for predicting diabetic patient readmissions within 30 days of discharge.
 
