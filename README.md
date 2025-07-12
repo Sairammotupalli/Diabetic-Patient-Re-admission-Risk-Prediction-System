@@ -49,12 +49,8 @@ A comprehensive machine learning pipeline for predicting diabetic patient readmi
 ### Setup
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/Sairammotupalli/Diabetic-Patient-Re-admission-Risk-Prediction-System.git
 cd Readmission_Prediction
-
-# Create virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
