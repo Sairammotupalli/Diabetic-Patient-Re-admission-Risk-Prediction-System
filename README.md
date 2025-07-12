@@ -1,4 +1,4 @@
-# Healthcare Readmission Prediction Pipeline
+# Diabetic-Patient-Re-admission-Risk-Prediction-System
 
 A comprehensive machine learning pipeline for predicting diabetic patient readmissions within 30 days of discharge.
 
@@ -21,7 +21,6 @@ A comprehensive machine learning pipeline for predicting diabetic patient readmi
 - **Missing Value Imputation**: Handle missing values using mode/median
 - **Category Consolidation**: Consolidate medications and diagnosis codes
 - **Label Encoding**: Encode categorical variables
-- **SMOTE Balancing**: Balance class distribution (readmitted vs. not)
 
 ### 2. Model Training
 - **Logistic Regression**: Linear model with regularization
@@ -86,10 +85,7 @@ python main.py --preprocess
 # 2. Model training only
 python main.py --train
 
-# 3. Hypothesis testing only
-python main.py --test
-
-# 4. Launch dashboard only
+# 3. Launch dashboard only
 python main.py --dashboard
 ```
 
@@ -119,38 +115,6 @@ The interactive Streamlit dashboard includes:
 - Age/gender analysis
 - Insulin usage patterns
 - Medication count analysis
-
-### Model Performance Page
-- Model comparison metrics
-- ROC curves
-- Confusion matrices
-- Performance visualization
-
-### Feature Importance Page
-- Top predictors for each model
-- Feature importance rankings
-- Interactive charts
-
-
-
-## Project Structure
-
-```
-Readmission_Prediction/
-├── data/
-│   ├── diabetic_data.csv      # Raw data
-│   ├── cleaned_data.csv       # Preprocessed data
-│   └── processed_data.csv     # Final processed data
-├── models/                    # Saved models and artifacts
-├── notebooks/                 # Jupyter notebooks
-├── plots/                     # Generated visualizations
-├── data_preprocessing.py      # Data preprocessing pipeline
-├── model_training.py          # Model training pipeline
-├── dashboard.py               # Streamlit dashboard
-├── main.py                    # Main orchestration script
-├── requirements.txt           # Python dependencies
-└── README.md                 # This file
-```
 
 ## Models Implemented
 
@@ -222,27 +186,3 @@ Preprocessing parameters in `data_preprocessing.py`:
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## Support
-
-For questions or issues:
-1. Check the troubleshooting section
-2. Review the code comments
-3. Open an issue on GitHub
-
-## Future Enhancements
-
-- [ ] Deep learning models (Neural Networks)
-- [ ] Real-time prediction API
-- [ ] Database integration
-- [ ] Advanced feature engineering
-- [ ] Model interpretability tools
-- [ ] Automated hyperparameter optimization
