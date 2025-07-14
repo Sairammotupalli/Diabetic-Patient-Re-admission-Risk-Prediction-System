@@ -29,7 +29,7 @@ A comprehensive machine learning pipeline for predicting diabetic patient readmi
 
 
 
-## 📊 Dataset Information
+## Dataset Information
 
 **Dataset Details:**
 - **Source**: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/diabetes+130-us+hospitals+for+years+1999-2008)
