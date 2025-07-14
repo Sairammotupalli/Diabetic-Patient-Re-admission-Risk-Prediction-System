@@ -175,7 +175,7 @@ python main.py --train
 ![ROC Curves](plots/roc_curves.png)
 
 ### Hypothesis testing
-![ROC Curves](plots/hypothesis testing.png)
+![ROC Curves](plots/hypothesis_testing.png)
 
 
 ## License
