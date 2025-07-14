@@ -140,7 +140,7 @@ async def predict_single_patient(patient: PatientData):
                 model_predictions[model_name] = "ERROR"
                 model_confidences[model_name] = 0.0
         
-        # Use best model prediction as primary (XGBoost was best)
+        # Use best model prediction as primary (XGBoost was best in previous runs)
         best_model = "XGBoost"
         primary_prediction = model_predictions.get(best_model, "NO READMISSION")
         primary_confidence = model_confidences.get(best_model, 0.0)

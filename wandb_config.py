@@ -11,7 +11,7 @@ def init_wandb():
         wandb.init(
             project="diabetic-readmission-prediction",
             config={
-                "model_types": ["XGBoost", "LogisticRegression"],
+                "model_types": ["XGBoost", "CatBoost", "LightGBM"],
                 "dataset": "UCI Diabetes 130-US Hospitals",
                 "target": "30-day readmission prediction",
                 "data_size": "101,766 records",
@@ -20,10 +20,10 @@ def init_wandb():
                 "random_state": 42
             }
         )
-        print("✅ W&B initialized successfully")
+        print(" W&B initialized successfully")
         return True
     except Exception as e:
-        print(f"⚠️ W&B initialization failed: {e}")
+        print(f" W&B initialization failed: {e}")
         print("Continuing without W&B tracking...")
         return False
 
@@ -37,20 +37,32 @@ def get_sweep_config():
             "goal": "maximize"
         },
         "parameters": {
-            "xgboost_learning_rate": {
-                "values": [0.01, 0.1, 0.2]
+            "xgboost_n_estimators": {
+                "values": [100, 200, 300]
             },
             "xgboost_max_depth": {
                 "values": [3, 6, 9]
             },
-            "xgboost_n_estimators": {
+            "xgboost_learning_rate": {
+                "values": [0.1, 0.2, 0.3]
+            },
+            "catboost_iterations": {
                 "values": [100, 200, 300]
             },
-            "logistic_regression_C": {
-                "values": [0.1, 1.0, 10.0]
+            "catboost_depth": {
+                "values": [4, 6, 8]
             },
-            "logistic_regression_penalty": {
-                "values": ["l1", "l2"]
+            "catboost_learning_rate": {
+                "values": [0.1, 0.2, 0.3]
+            },
+            "lightgbm_n_estimators": {
+                "values": [100, 200, 300]
+            },
+            "lightgbm_max_depth": {
+                "values": [3, 6, 9]
+            },
+            "lightgbm_learning_rate": {
+                "values": [0.1, 0.2, 0.3]
             }
         }
     }
@@ -71,9 +83,9 @@ def log_model_performance(model_name, metrics, params=None):
             log_dict[f"{model_name}_params"] = params
             
         wandb.log(log_dict)
-        print(f"✅ Logged {model_name} performance to W&B")
+        print(f" Logged {model_name} performance to W&B")
     except Exception as e:
-        print(f"⚠️ W&B logging failed for {model_name}: {e}")
+        print(f" W&B logging failed for {model_name}: {e}")
 
 def log_feature_importance(model_name, feature_names, importance_scores):
     """Log feature importance to W&B"""
@@ -82,9 +94,9 @@ def log_feature_importance(model_name, feature_names, importance_scores):
         importance_data = [[name, score] for name, score in zip(feature_names, importance_scores)]
         table = wandb.Table(data=importance_data, columns=["Feature", "Importance"])
         wandb.log({f"{model_name}_feature_importance": table})
-        print(f"✅ Logged {model_name} feature importance to W&B")
+        print(f" Logged {model_name} feature importance to W&B")
     except Exception as e:
-        print(f"⚠️ W&B feature importance logging failed: {e}")
+        print(f" W&B feature importance logging failed: {e}")
 
 def log_plots(plot_paths):
     """Log plot images to W&B"""
@@ -92,23 +104,23 @@ def log_plots(plot_paths):
         for plot_name, plot_path in plot_paths.items():
             if os.path.exists(plot_path):
                 wandb.log({plot_name: wandb.Image(plot_path)})
-                print(f"✅ Logged {plot_name} to W&B")
+                print(f" Logged {plot_name} to W&B")
     except Exception as e:
-        print(f"⚠️ W&B plot logging failed: {e}")
+        print(f" W&B plot logging failed: {e}")
 
 def finish_wandb():
     """Finish W&B run"""
     try:
         wandb.finish()
-        print("✅ W&B run completed successfully")
+        print(" W&B run completed successfully")
     except Exception as e:
-        print(f"⚠️ W&B finalization failed: {e}")
+        print(f" W&B finalization failed: {e}")
 
 # Environment variable for W&B API key
 def setup_wandb():
     """Setup W&B environment"""
     if not os.getenv("WANDB_API_KEY"):
-        print("⚠️ WANDB_API_KEY not found. Set it to enable W&B tracking.")
+        print(" WANDB_API_KEY not found. Set it to enable W&B tracking.")
         print("Get your API key from: https://wandb.ai/settings")
         return False
     return True 

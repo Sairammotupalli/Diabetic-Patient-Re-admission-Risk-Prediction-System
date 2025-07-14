@@ -21,8 +21,9 @@ class ReadmissionPredictor:
         
         # Load models
         model_files = {
-            'LogisticRegression': 'models/logisticregression_model.pkl',
-            'XGBoost': 'models/xgboost_model.pkl'
+            'XGBoost': 'models/xgboost_model.pkl',
+            'CatBoost': 'models/catboost_model.pkl',
+            'LightGBM': 'models/lightgbm_model.pkl'
         }
         
         for name, file_path in model_files.items():

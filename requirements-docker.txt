@@ -1,25 +1,38 @@
-# Core ML packages
-fastapi
-uvicorn
-pandas
-joblib
-scikit-learn
-xgboost
-numpy
-matplotlib
-seaborn
-plotly
-streamlit
-imbalanced-learn
-mlflow
-sqlalchemy
-scipy
+# Core data science libraries
+pandas>=1.5.0
+numpy>=1.21.0
+scikit-learn>=1.1.0
+scipy>=1.9.0
+
+# Machine learning libraries
+xgboost>=1.6.0
+catboost>=1.2.0
+lightgbm>=3.3.0
+imbalanced-learn>=0.9.0
+
+# Visualization libraries
+matplotlib>=3.5.0
+seaborn>=0.11.0
+plotly>=5.0.0
+
+# Web framework and dashboard
+streamlit>=1.25.0
+fastapi>=0.95.0
+uvicorn>=0.20.0
+pydantic>=1.10.0
+
+# Data processing and utilities
+joblib>=1.2.0
+python-dateutil>=2.8.0
 
 # Jupyter for development
-jupyter
-jupyterlab
-ipykernel
+jupyter>=1.0.0
+jupyterlab>=3.5.0
+ipykernel>=6.0.0
 
 # Additional utilities
-tqdm
-requests 
+requests>=2.28.0
+tqdm>=4.64.0
+
+# Experiment tracking and model management
+wandb>=0.15.8 

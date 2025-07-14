@@ -20,7 +20,8 @@ class SinglePatientPredictor:
         try:
             # Load models
             self.models['XGBoost'] = joblib.load('models/xgboost_model.pkl')
-            self.models['LogisticRegression'] = joblib.load('models/logisticregression_model.pkl')
+            self.models['CatBoost'] = joblib.load('models/catboost_model.pkl')
+            self.models['LightGBM'] = joblib.load('models/lightgbm_model.pkl')
             
             # Load preprocessors
             self.label_encoders = joblib.load('models/label_encoders.pkl')

@@ -5,6 +5,7 @@ from scipy.stats import fisher_exact
 import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
+import os
 
 class HypothesisTester:
     def __init__(self):
@@ -71,6 +72,20 @@ class HypothesisTester:
         """Test correlation between age and readmission using ANOVA"""
         print("\n=== Testing Age vs Readmission Correlation ===")
         
+        # Age group mapping for better interpretation
+        age_mapping = {
+            0: "[0-10)",
+            1: "[10-20)",
+            2: "[20-30)",
+            3: "[30-40)",
+            4: "[40-50)",
+            5: "[50-60)",
+            6: "[60-70)",
+            7: "[70-80)",
+            8: "[80-90)",
+            9: "[90-100)"
+        }
+        
         # Extract age groups from age column
         age_groups = df['age'].unique()
         readmission_by_age = []
@@ -78,7 +93,8 @@ class HypothesisTester:
         for age_group in age_groups:
             readmission_rate = df[df['age'] == age_group]['readmitted'].mean()
             readmission_by_age.append(readmission_rate)
-            print(f"Age group {age_group}: {readmission_rate:.4f} ({readmission_rate*100:.2f}%)")
+            age_label = age_mapping.get(age_group, f"Age {age_group}")
+            print(f"{age_label}: {readmission_rate:.4f} ({readmission_rate*100:.2f}%)")
         
         # ANOVA test
         age_data = [df[df['age'] == age]['readmitted'].values for age in age_groups]
@@ -92,7 +108,8 @@ class HypothesisTester:
             'f_stat': f_stat,
             'p_value': p_value,
             'age_groups': age_groups,
-            'readmission_by_age': readmission_by_age
+            'readmission_by_age': readmission_by_age,
+            'age_mapping': age_mapping
         }
         
         return p_value < 0.05
@@ -173,6 +190,25 @@ class HypothesisTester:
         # Age vs readmission
         plt.subplot(2, 2, 2)
         age_readmission = df.groupby('age')['readmitted'].mean()
+        
+        # Create proper age labels
+        age_mapping = {
+            0: "[0-10)",
+            1: "[10-20)",
+            2: "[20-30)",
+            3: "[30-40)",
+            4: "[40-50)",
+            5: "[50-60)",
+            6: "[60-70)",
+            7: "[70-80)",
+            8: "[80-90)",
+            9: "[90-100)"
+        }
+        
+        # Create new index with proper labels
+        age_labels = [age_mapping.get(age, f"Age {age}") for age in age_readmission.index]
+        age_readmission.index = age_labels
+        
         age_readmission.plot(kind='bar', color='skyblue')
         plt.title('Readmission Rate by Age Group')
         plt.ylabel('Readmission Rate')
@@ -230,6 +266,5 @@ class HypothesisTester:
         return self.results
 
 if __name__ == "__main__":
-    import os
     tester = HypothesisTester()
     results = tester.run_hypothesis_tests() 

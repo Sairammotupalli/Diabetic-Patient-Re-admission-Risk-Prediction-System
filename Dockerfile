@@ -8,13 +8,14 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
-COPY requirements.txt .
+COPY requirements-docker.txt ./
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements-docker.txt
 
 # Copy all application files
 COPY . .
@@ -28,10 +29,13 @@ EXPOSE 8501 8000
 # Create a startup script
 RUN echo '#!/bin/bash\n\
 echo "Starting Readmission Prediction System..."\n\
-echo "Available services:"\n\
+echo "Running full pipeline (preprocessing, training, hypothesis testing)..."\n\
+python3 main.py --preprocess --train --test\n\
+echo "Pipeline completed!"\n\
+echo ""\n\
+echo "Starting services..."\n\
 echo "1. Streamlit Dashboard: http://localhost:8501"\n\
 echo "2. FastAPI: http://localhost:8000"\n\
-echo "3. Command line prediction: python3 single_patient_predictor.py"\n\
 echo ""\n\
 echo "Starting Streamlit Dashboard..."\n\
 streamlit run dashboard.py --server.headless true --server.port 8501 --server.address 0.0.0.0 &\n\

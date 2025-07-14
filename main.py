@@ -5,7 +5,7 @@ Healthcare Readmission Prediction Pipeline
 
 This script orchestrates the complete pipeline for predicting diabetic patient readmissions:
 1. Data preprocessing
-2. Model training (Logistic Regression, Random Forest, XGBoost)
+2. Model training (XGBoost, CatBoost, LightGBM)
 3. Model evaluation
 4. Dashboard generation
 
@@ -100,12 +100,13 @@ def run_training():
     try:
         from model_training import ModelTrainer
         
-        # Initialize W&B if available
-        if WANDB_AVAILABLE and setup_wandb():
+        # Check if W&B is enabled (not disabled in Docker)
+        wandb_mode = os.getenv('WANDB_MODE', 'run')
+        if WANDB_AVAILABLE and wandb_mode != 'disabled' and setup_wandb():
             init_wandb()
             print("✅ W&B tracking enabled")
         else:
-            print("⚠️ W&B tracking disabled")
+            print("ℹ️ W&B tracking disabled (Docker mode or not available)")
         
         print("Training models...")
         trainer = ModelTrainer()
@@ -118,7 +119,7 @@ def run_training():
         print(f"   - Best model: {best_model[0]} (AUC: {best_model[1]['auc']:.4f})")
         
         # Finish W&B run
-        if WANDB_AVAILABLE:
+        if WANDB_AVAILABLE and wandb_mode != 'disabled':
             finish_wandb()
         
     except ImportError as e:
@@ -190,6 +191,8 @@ def check_dependencies():
         'numpy': 'numpy', 
         'scikit-learn': 'sklearn',
         'xgboost': 'xgboost',
+        'catboost': 'catboost',
+        'lightgbm': 'lightgbm',
         'imbalanced-learn': 'imblearn',
         'matplotlib': 'matplotlib',
         'seaborn': 'seaborn',

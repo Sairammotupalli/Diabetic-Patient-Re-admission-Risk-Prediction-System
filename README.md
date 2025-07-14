@@ -13,13 +13,13 @@ A comprehensive machine learning pipeline for predicting diabetic patient readmi
 
 **Methodology**:
 - **Data**: 101,766 diabetic patient encounters from 130 US hospitals (1999-2008)
-- **Models**: XGBoost and Logistic Regression with hyperparameter tuning
+- **Models**: XGBoost, Logistic Regression, and Neural Network with hyperparameter tuning
 - **Evaluation**: Cross-validation, ROC-AUC, precision-recall metrics
 - **Deployment**: Interactive Streamlit dashboard for real-time predictions
 
 **Key Features**:
 - Complete data preprocessing pipeline
-- Multiple ML models (Logistic Regression, XGBoost)
+- Multiple ML models (Logistic Regression, XGBoost, Neural Network)
 - SMOTE for class balancing
 - Hypothesis testing for insulin usage correlation
 - Interactive Streamlit dashboard
@@ -178,16 +178,47 @@ python main.py --train
 | FastAPI | 8000 | http://localhost:8000 | REST API for predictions |
 | Jupyter Lab | 8888 | http://localhost:8888 | Development environment |
 
+## 🚀 New Models Added
+
+### **Neural Network (MLP)**
+- **Type**: Multi-Layer Perceptron
+- **Advantages**: 
+  - Captures complex non-linear relationships in medical data
+  - High capacity for learning sophisticated patterns
+  - Can model intricate interactions between clinical variables
+- **Hyperparameters**: hidden_layer_sizes, alpha, learning_rate_init
+- **Use Case**: Complex medical interactions and advanced pattern recognition
+
+
+
+### **Model Ensemble Benefits**
+- **Diversity**: Different algorithms capture different aspects of the data
+- **Robustness**: Ensemble predictions are more reliable than single models
+- **Performance**: Combined predictions often outperform individual models
+- **Interpretability**: Multiple perspectives on the same prediction problem
+- **Stability**: 3-model ensemble provides balanced predictions
 
 ## Models Implemented
 
 ### 1. Logistic Regression
-- **Advantages**: Interpretable, fast training
+- **Advantages**: Interpretable, fast training, good baseline
 - **Hyperparameters**: C, penalty, solver
+- **Use Case**: Linear relationships in clinical data
 
 ### 2. XGBoost
-- **Advantages**: High performance, handles missing values
-- **Hyperparameters**: learning_rate, max_depth, subsample
+- **Advantages**: High performance, handles missing values, feature importance
+- **Hyperparameters**: learning_rate, max_depth, n_estimators
+- **Use Case**: Complex non-linear patterns in medical data
+
+### 3. Neural Network (MLP)
+- **Advantages**: Captures complex non-linear relationships, high capacity
+- **Hyperparameters**: hidden_layer_sizes, alpha, learning_rate_init
+- **Use Case**: Sophisticated medical interactions and patterns
+
+### 4. Support Vector Machine (SVM)
+- **Advantages**: Excellent for high-dimensional data, good generalization
+- **Hyperparameters**: C, kernel, gamma
+- **Use Case**: Clinical data with many features and complex decision boundaries
 
 ## Evaluation Metrics
 
