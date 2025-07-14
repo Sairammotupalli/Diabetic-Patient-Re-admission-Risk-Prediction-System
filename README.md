@@ -1,6 +1,6 @@
 # Diabetic-Patient-Re-admission-Risk-Prediction-System
 
-[-> Webiste Link](https://diabetic-patient-re-admission-risk-prediction-system-j52gbqfnw.streamlit.app/)
+[Webiste Link](https://diabetic-patient-re-admission-risk-prediction-system-j52gbqfnw.streamlit.app/)
 
 
 
