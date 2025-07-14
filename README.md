@@ -1,6 +1,6 @@
 # Diabetic-Patient-Re-admission-Risk-Prediction-System
 
-[Webiste Link](https://diabetic-patient-re-admission-risk-prediction-system-j52gbqfnw.streamlit.app/)
+[![Live Dashboard](https://img.shields.io/badge/Live%20Dashboard-Streamlit-blue?style=for-the-badge&logo=streamlit)](https://diabetic-patient-re-admission-risk-prediction-system-j52gbqfnw.streamlit.app/)
 
 
 
