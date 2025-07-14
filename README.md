@@ -174,6 +174,9 @@ python main.py --train
 ### ROC Curves Comparison
 ![ROC Curves](plots/roc_curves.png)
 
+### Hypothesis testing
+![ROC Curves](plots/hypothesis testing.png)
+
 
 ## License
 
