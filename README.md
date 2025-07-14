@@ -1,10 +1,31 @@
 # Diabetic-Patient-Re-admission-Risk-Prediction-System
 
-[Webiste Link](https://diabetic-patient-re-admission-risk-prediction-system-j52gbqfnw.streamlit.app/)
+[![Live Dashboard](https://img.shields.io/badge/Live%20Dashboard-Streamlit-blue?style=for-the-badge&logo=streamlit)](https://diabetic-patient-re-admission-risk-prediction-system-j52gbqfnw.streamlit.app/)
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github)](https://github.com/Sairammotupalli/Diabetic-Patient-Re-admission-Risk-Prediction-System)
 
 A comprehensive machine learning pipeline for predicting diabetic patient readmissions within 30 days of discharge using clinical and demographic data.
 
 ## Project Overview
+
+**Target**: Use healthcare data to predict if a diabetic patient will be readmitted within 30 days of discharge.
+
+**Research Question**: Can machine learning models accurately predict 30-day readmission risk for diabetic patients using clinical and demographic data?
+
+**Methodology**:
+- **Data**: 101,766 diabetic patient encounters from 130 US hospitals (1999-2008)
+- **Models**: XGBoost and Logistic Regression with hyperparameter tuning
+- **Evaluation**: Cross-validation, ROC-AUC, precision-recall metrics
+- **Deployment**: Interactive Streamlit dashboard for real-time predictions
+
+**Key Features**:
+- Complete data preprocessing pipeline
+- Multiple ML models (Logistic Regression, XGBoost)
+- SMOTE for class balancing
+- Hypothesis testing for insulin usage correlation
+- Interactive Streamlit dashboard
+- Comprehensive model evaluation
+- Full Docker containerization
+- Weights & Biases experiment tracking
 
 
 
@@ -92,6 +113,64 @@ python model_training.py
 streamlit run dashboard.py
 ```
 
+## 🐳 Docker Implementation
+
+### Docker Architecture
+This project is fully containerized with Docker for easy deployment and reproducibility.
+
+## 📊 Experiment Tracking with Weights & Biases
+
+### W&B Features
+This project includes **Weights & Biases (W&B)** integration for professional ML experiment tracking:
+
+#### **What W&B Tracks:**
+- **Hyperparameter optimization** with GridSearchCV
+- **Model performance metrics** (accuracy, AUC-ROC, precision, recall)
+- **Training curves** and validation scores
+- **Feature importance** analysis
+- **Model artifacts** and versioning
+- **Visualization plots** (ROC curves, confusion matrices)
+
+#### **Setup W&B:**
+```bash
+# Install W&B
+pip install wandb
+
+# Setup W&B (optional)
+python setup_wandb.py
+
+# Run training with W&B tracking
+python main.py --train
+```
+
+#### **W&B Dashboard:**
+- **Project**: `diabetic-readmission-prediction`
+- **Metrics**: Real-time training progress
+- **Models**: Version control for trained models
+- **Plots**: Interactive visualizations
+- **Sweeps**: Hyperparameter optimization
+
+#### **Benefits:**
+✅ **Experiment tracking** - Compare model versions  
+✅ **Hyperparameter optimization** - Automated tuning  
+✅ **Model versioning** - Track best models  
+✅ **Performance monitoring** - Real-time metrics  
+✅ **Collaboration** - Share results with team  
+✅ **Reproducibility** - Complete experiment history
+
+#### **Multi-Service Architecture**
+- **Main Service**: Streamlit dashboard + FastAPI
+- **Training Service**: Model training pipeline
+- **Preprocessing Service**: Data preprocessing
+- **Development Service**: Jupyter Lab for development
+- **Testing Service**: Hypothesis testing
+
+#### **Docker Features**
+- **Base Image**: Python 3.9-slim (optimized for ML)
+- **Multi-Stage Build**: Efficient image layers
+- **Health Checks**: Automatic service monitoring
+- **Volume Mounts**: Persistent data storage
+- **Environment Isolation**: Reproducible environments
 #### **Ports & Services**
 | Service | Port | URL | Description |
 |---------|------|-----|-------------|

@@ -18,6 +18,14 @@ import os
 import sys
 from pathlib import Path
 
+# Import W&B configuration
+try:
+    from wandb_config import init_wandb, setup_wandb, finish_wandb
+    WANDB_AVAILABLE = True
+except ImportError:
+    WANDB_AVAILABLE = False
+    print("⚠️ W&B not available. Install with: pip install wandb")
+
 def main():
     parser = argparse.ArgumentParser(description='Healthcare Readmission Prediction Pipeline')
     parser.add_argument('--preprocess', action='store_true', help='Run data preprocessing')
@@ -92,6 +100,13 @@ def run_training():
     try:
         from model_training import ModelTrainer
         
+        # Initialize W&B if available
+        if WANDB_AVAILABLE and setup_wandb():
+            init_wandb()
+            print("✅ W&B tracking enabled")
+        else:
+            print("⚠️ W&B tracking disabled")
+        
         print("Training models...")
         trainer = ModelTrainer()
         results = trainer.run_training_pipeline()
@@ -101,6 +116,10 @@ def run_training():
         # Print best model
         best_model = max(results.items(), key=lambda x: x[1]['auc'])
         print(f"   - Best model: {best_model[0]} (AUC: {best_model[1]['auc']:.4f})")
+        
+        # Finish W&B run
+        if WANDB_AVAILABLE:
+            finish_wandb()
         
     except ImportError as e:
         print(f" Import error: {e}")

@@ -11,12 +11,28 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import wandb
 
 class ModelTrainer:
     def __init__(self):
         self.models = {}
         self.best_models = {}
         self.feature_importance = {}
+        
+        # Initialize W&B
+        try:
+            wandb.init(
+                project="diabetic-readmission-prediction",
+                config={
+                    "model_types": ["XGBoost", "LogisticRegression"],
+                    "dataset": "UCI Diabetes 130-US Hospitals",
+                    "target": "30-day readmission prediction"
+                }
+            )
+            print("✅ W&B initialized successfully")
+        except Exception as e:
+            print(f"⚠️ W&B initialization failed: {e}")
+            print("Continuing without W&B tracking...")
         
     def load_data(self):
         """Load preprocessed data"""
@@ -147,6 +163,16 @@ class ModelTrainer:
                 print(f"Best parameters for {model_name}: {grid_search.best_params_}")
                 print(f"Best CV score for {model_name}: {grid_search.best_score_:.4f}")
                 
+                # Log to W&B
+                try:
+                    wandb.log({
+                        f"{model_name}_best_params": grid_search.best_params_,
+                        f"{model_name}_cv_score": grid_search.best_score_,
+                        f"{model_name}_training_time": grid_search.refit_time_
+                    })
+                except Exception as e:
+                    print(f"⚠️ W&B logging failed for {model_name}: {e}")
+                
                 # Extract feature importance if available
                 if hasattr(grid_search.best_estimator_.named_steps['classifier'], 'feature_importances_'):
                     self.feature_importance[model_name] = grid_search.best_estimator_.named_steps['classifier'].feature_importances_
@@ -197,6 +223,16 @@ class ModelTrainer:
             print(f"AUC: {auc:.4f}")
             print("Classification Report:")
             print(report)
+            
+            # Log to W&B
+            try:
+                wandb.log({
+                    f"{model_name}_test_accuracy": accuracy,
+                    f"{model_name}_test_auc": auc,
+                    f"{model_name}_classification_report": report
+                })
+            except Exception as e:
+                print(f"⚠️ W&B logging failed for {model_name}: {e}")
         
         return results
     
@@ -207,12 +243,28 @@ class ModelTrainer:
         os.makedirs('models', exist_ok=True)
         
         for model_name, model in self.best_models.items():
-            joblib.dump(model, f'models/{model_name.lower()}_model.pkl')
+            model_path = f'models/{model_name.lower()}_model.pkl'
+            joblib.dump(model, model_path)
             print(f"Saved {model_name} model")
+            
+            # Log model to W&B
+            try:
+                wandb.save(model_path)
+                wandb.log_artifact(model_path, name=f"{model_name.lower()}_model", type="model")
+            except Exception as e:
+                print(f"⚠️ W&B model logging failed for {model_name}: {e}")
         
         # Save feature importance
-        joblib.dump(self.feature_importance, 'models/feature_importance.pkl')
+        feature_path = 'models/feature_importance.pkl'
+        joblib.dump(self.feature_importance, feature_path)
         print("Saved feature importance")
+        
+        # Log feature importance to W&B
+        try:
+            wandb.save(feature_path)
+            wandb.log_artifact(feature_path, name="feature_importance", type="data")
+        except Exception as e:
+            print(f"⚠️ W&B feature importance logging failed: {e}")
     
     def plot_results(self, results, X_test, y_test):
         """Plot model comparison results"""
@@ -272,6 +324,17 @@ class ModelTrainer:
             plt.close()
         
         print("Plots saved to plots/ directory")
+        
+        # Log plots to W&B
+        try:
+            wandb.save('plots/roc_curves.png')
+            wandb.save('plots/confusion_matrices.png')
+            wandb.save('plots/feature_importance.png')
+            wandb.log({"roc_curves": wandb.Image('plots/roc_curves.png')})
+            wandb.log({"confusion_matrices": wandb.Image('plots/confusion_matrices.png')})
+            wandb.log({"feature_importance": wandb.Image('plots/feature_importance.png')})
+        except Exception as e:
+            print(f"⚠️ W&B plot logging failed: {e}")
     
     def run_training_pipeline(self):
         """Run the complete training pipeline"""
@@ -298,6 +361,18 @@ class ModelTrainer:
         # Find best model
         best_model = max(results.items(), key=lambda x: x[1]['auc'])
         print(f"\nBest model: {best_model[0]} with AUC: {best_model[1]['auc']:.4f}")
+        
+        # Log best model to W&B
+        try:
+            wandb.log({
+                "best_model": best_model[0],
+                "best_auc": best_model[1]['auc'],
+                "best_accuracy": best_model[1]['accuracy']
+            })
+            wandb.finish()
+            print("✅ W&B run completed successfully")
+        except Exception as e:
+            print(f"⚠️ W&B finalization failed: {e}")
         
         return results
 
