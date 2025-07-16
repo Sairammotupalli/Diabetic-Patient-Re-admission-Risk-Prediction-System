@@ -176,8 +176,3 @@ python main.py --train
 
 ### Hypothesis testing
 ![ROC Curves](plots/hypothesis_testing.png)
-
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
